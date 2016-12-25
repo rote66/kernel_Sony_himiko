@@ -73,6 +73,7 @@
  */
 enum pageflags {
 	PG_locked,		/* Page is locked. Don't touch. */
+	PG_waiters,		/* Page has waiters, check its waitqueue */
 	PG_referenced,
 	PG_uptodate,
 	PG_dirty,
@@ -139,6 +140,38 @@ enum pageflags {
 };
 
 #ifndef __GENERATING_BOUNDS_H
+struct page;	/* forward declaration */
+/*
+ * Page flags policies wrt compound pages
+ *
+ * PF_ANY:
+ *     the page flag is relevant for small, head and tail pages.
+ *
+ * PF_HEAD:
+ *     for compound page all operations related to the page flag applied to
+ *     head page.
+ *
+ * PF_ONLY_HEAD:
+ *     for compound page, callers only ever operate on the head page.
+ *
+ * PF_NO_TAIL:
+ *     modifications of the page flag must be done on small or head pages,
+ *     checks can be done on tail pages too.
+ *
+ * PF_NO_COMPOUND:
+ *     the page flag is not relevant for compound pages.
+ */
+#define PF_ANY(page, enforce)	page
+#define PF_HEAD(page, enforce)	compound_head(page)
+#define PF_ONLY_HEAD(page, enforce) ({					\
+		VM_BUG_ON_PGFLAGS(PageTail(page), page);		\
+		page;})
+#define PF_NO_TAIL(page, enforce) ({					\
+		VM_BUG_ON_PGFLAGS(enforce && PageTail(page), page);	\
+		compound_head(page);})
+#define PF_NO_COMPOUND(page, enforce) ({				\
+		VM_BUG_ON_PGFLAGS(enforce && PageCompound(page), page);	\
+		page;})
 
 struct page;	/* forward declaration */
 
@@ -180,6 +213,9 @@ static inline int PageCompound(struct page *page)
  */
 #define PF_ANY(page, enforce)	page
 #define PF_HEAD(page, enforce)	compound_head(page)
+#define PF_ONLY_HEAD(page, enforce) ({					\
+		VM_BUG_ON_PGFLAGS(PageTail(page), page);		\
+		page;})
 #define PF_NO_TAIL(page, enforce) ({					\
 		VM_BUG_ON_PGFLAGS(enforce && PageTail(page), page);	\
 		compound_head(page);})
@@ -264,6 +300,7 @@ static inline int __TestClearPage##uname(struct page *page) { return 0; }
 	TESTSETFLAG_FALSE(uname) TESTCLEARFLAG_FALSE(uname)
 
 __PAGEFLAG(Locked, locked, PF_NO_TAIL)
+PAGEFLAG(Waiters, waiters, PF_ONLY_HEAD) __CLEARPAGEFLAG(Waiters, waiters, PF_ONLY_HEAD)
 PAGEFLAG(Error, error, PF_ANY) TESTCLEARFLAG(Error, error, PF_ANY)
 PAGEFLAG(Referenced, referenced, PF_ANY) TESTCLEARFLAG(Referenced, referenced, PF_ANY)
 	__SETPAGEFLAG(Referenced, referenced, PF_ANY)
@@ -691,6 +728,7 @@ static inline int page_has_private(struct page *page)
 
 #undef PF_ANY
 #undef PF_HEAD
+#undef PF_ONLY_HEAD
 #undef PF_NO_TAIL
 #undef PF_NO_COMPOUND
 #endif /* !__GENERATING_BOUNDS_H */
