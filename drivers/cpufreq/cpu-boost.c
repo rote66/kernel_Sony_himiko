@@ -189,6 +189,11 @@ static void do_input_boost_rem(struct work_struct *work)
 		i_sync_info->input_boost_min = 0;
 	}
 
+#ifdef CONFIG_DYNAMIC_STUNE_BOOST
+	/* Reset dynamic stune boost value to the default value */
+	reset_stune_boost("top-app");
+#endif /* CONFIG_DYNAMIC_STUNE_BOOST */
+
 	/* Update policies for all online CPUs */
 	update_policy_online();
 }
