@@ -679,7 +679,6 @@ static ssize_t read_block_state(struct file *file, char __user *buf,
 	kbuf = kmalloc_node(count, kmalloc_flags, NUMA_NO_NODE);
 	if (!kbuf && count > PAGE_SIZE)
 		kbuf = vmalloc(count);
-
 	if (!kbuf)
 		return -ENOMEM;
 
@@ -1763,7 +1762,6 @@ static int zram_remove(struct zram *zram)
 	mutex_unlock(&bdev->bd_mutex);
 
 	zram_debugfs_unregister(zram);
-
 	/* Make sure all the pending I/O are finished */
 	fsync_bdev(bdev);
 	zram_reset_device(zram);
