@@ -4,3 +4,6 @@ config SND_SOC_SDM660_CDC
 
 config HIGH_VOL_MIC
 	tristate "Config 2.7v microphone"
+
+config SOUND_CONTROL
+	bool "Sound Control for msm89xx"
