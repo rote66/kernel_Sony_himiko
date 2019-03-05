@@ -137,7 +137,7 @@ struct incell_ctrl {
 #define DEFAULT_FPS_ARRAY_SIZE 120
 
 #define CHANGE_FPS_MIN 22
-#define CHANGE_FPS_MAX 60
+#define CHANGE_FPS_MAX 120
 
 #define CHANGE_FPS_PORCH 2
 #define CHANGE_FPS_SEND 10
