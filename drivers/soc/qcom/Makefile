@@ -126,3 +126,10 @@ obj-$(CONFIG_LAST_LOGS) += last_logs.o
 obj-$(CONFIG_SECURITY_STATUS) += security_status.o
 obj-$(CONFIG_ARCH_SDM630) += console_setup.o
 obj-$(CONFIG_STATE_NOTIFIER) += state_notifier.o
+
+ifeq ($(CONFIG_ANDROID),y)
+CFLAGS_rpm_stats.o += -DCONFIG_DEBUG_FS
+CFLAGS_rpm_master_stat.o += -DCONFIG_DEBUG_FS
+CFLAGS_rpm_rail_stats.o += -DCONFIG_DEBUG_FS
+CFLAGS_system_stats.o += -DCONFIG_DEBUG_FS
+endif
