@@ -728,8 +728,6 @@ static u64 sched_vslice(struct cfs_rq *cfs_rq, struct sched_entity *se)
 static int select_idle_sibling(struct task_struct *p, int prev_cpu, int cpu);
 static unsigned long task_h_load(struct task_struct *p);
 
-#define LOAD_AVG_MAX_N 345 /* number of full periods to produce LOAD_AVG_MAX */
-
 /* Give new sched_entity start runnable values to heavy its load in infant time */
 void init_entity_runnable_average(struct sched_entity *se)
 {
@@ -2676,16 +2674,6 @@ int sched_set_wake_up_idle(struct task_struct *p, int wake_up_idle)
 EXPORT_SYMBOL(sched_set_wake_up_idle);
 
 #ifdef CONFIG_SMP
-/*
- * Precomputed \Sum y^k { 1<=k<=n }.  These are floor(true_value) to prevent
- * over-estimates when re-combining.
- */
-static const u32 runnable_avg_yN_sum[] = {
-	    0, 1002, 1982, 2941, 3880, 4798, 5697, 6576, 7437, 8279, 9103,
-	 9909,10698,11470,12226,12966,13690,14398,15091,15769,16433,17082,
-	17718,18340,18949,19545,20128,20698,21256,21802,22336,22859,23371,
-};
-
 /*
  * Approximate:
  *   val * y^n,    where y^32 ~= 0.5 (~1 scheduling period)
