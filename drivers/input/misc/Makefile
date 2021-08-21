@@ -83,3 +83,5 @@ obj-$(CONFIG_INPUT_PIXART_OTS_PAT9125_SWITCH)	+= ots_pat9125/
 obj-$(CONFIG_INPUT_STMVL53L0)                 += vl53L0/
 obj-$(CONFIG_INPUT_S5712)		+= s5712.o
 obj-$(CONFIG_INPUT_FP_EGIS)             += egistec/
+obj-$(CONFIG_INPUT_BU520X1NVX)		+= bu520x1nvx/
+obj-$(CONFIG_FPC1145_PLATFORM)          += fpc1145/
