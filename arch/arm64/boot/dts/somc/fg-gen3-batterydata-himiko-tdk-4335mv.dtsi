@@ -1,0 +1,107 @@
+/* Copyright (c) 2017, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+/*
+ * Copyright (C) 2019 Sony Mobile Communications Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2, as
+ * published by the Free Software Foundation.
+ */
+
+qcom,himiko_tdk_4335mv {
+	qcom, = <24>;
+	/* #3562568_Compal_BY36_2695mAh_averaged_MasterSlave_Jul16th2018*/
+	somc,initial-capacity-uah = <2813000>;
+	qcom,max-voltage-uv = <4335000>;
+	qcom,fastchg-current-ma = <2484>;
+	qcom,fg-cc-cv-threshold-mv = <4325>;
+	qcom,nom-batt-capacity-mah = <2625>;
+	qcom,batt-id-kohm = <15>;
+	qcom,battery-beta = <4050>;
+	qcom,battery-type = "1315-7716-1";
+	qcom,checksum = <0xFDA0>;
+	qcom,gui-version = "PM660GUI - 0.0.0.45";
+	qcom,fg-profile-data = [
+		 B2 1E 85 FD
+		 E1 02 35 F5
+		 D3 1C 0F 02
+		 92 0D AF 0A
+		 73 18 0C 23
+		 64 45 14 53
+		 6D 00 00 00
+		 12 00 00 00
+		 00 00 4E C3
+		 68 CC E5 AB
+		 2C 00 08 00
+		 09 00 FE E4
+		 79 FC 4D F3
+		 C7 FD A4 0B
+		 45 ED CA 2B
+		 1E 06 09 20
+		 27 00 14 00
+		 CE 1F 96 05
+		 58 0A 67 06
+		 B6 1C 17 03
+		 EA 15 2E 12
+		 86 18 EB 23
+		 C8 4D 7E 5B
+		 6C 00 00 00
+		 0D 00 00 00
+		 00 00 83 D5
+		 75 C3 4B CA
+		 21 00 00 00
+		 BB EA FE E4
+		 AD 06 16 F2
+		 55 DC 07 03
+		 31 FD 80 1A
+		 99 33 CC FF
+		 07 10 00 00
+		 A6 0A 5C 45
+		 21 00 40 00
+		 A1 01 0A FA
+		 FF 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+	];
+
+	somc,step-cfg = <
+		(-2550) 50    0 4500    0 4335 1
+		   50  120    0 4500  550 4335 2
+		  120  250    0 4100 1925 4335 3
+		  120  250 4100 4200 1375 4335 3
+		  120  250 4200 4300 1100 4335 3
+		  120  250 4300 4500  825 4335 3
+		  250  450    0 4150 2050 4335 3
+		  250  450 4150 4200 2050 4335 3
+		  250  450 4200 4300 1375 4335 3
+		  250  450 4300 4500  825 4335 3
+		  450  550    0 4500  825 4200 4
+		  550 2550    0 4500    0 4200 5
+	>;
+	somc,step-cell-impedance-mohm = <25>;
+};

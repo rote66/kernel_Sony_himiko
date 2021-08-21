@@ -1,0 +1,234 @@
+/*
+ * Copyright (C) 2019 Sony Mobile Communications Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2, as
+ * published by the Free Software Foundation.
+ */
+&soc {
+	/delete-node/ qcom,camera-flash@1;
+
+	cam_iovdd_gpio_regulator: cam_iovdd_fixed_regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "cam_iovdd_gpio_regulator";
+		regulator-min-microvolt = <2040000>;
+		regulator-max-microvolt = <2040000>;
+		enable-active-high;
+		gpio = <&tlmm 63 0>;
+		vin-supply = <&pm660_s4>;
+	};
+};
+
+&cci {
+	qcom,camera@0 {
+		qcom,mount-angle = <90>;
+		/delete-property/ qcom,ois-src;
+		cam_vio-supply = <&cam_iovdd_gpio_regulator>;
+		qcom,cam-vreg-name = "cam_vio", "cam_vana", "cam_vdig",
+					"cam_vaf";
+		qcom,cam-vreg-min-voltage = <0 0 0 2800000>;
+		qcom,cam-vreg-max-voltage = <0 0 0 2800000>;
+		qcom,cam-vreg-op-mode = <0 0 0 100000>;
+		gpios = <&tlmm 32 0>,
+			<&tlmm 46 0>,
+			<&tlmm 40 0>,
+			<&tlmm 63 0>,
+			<&tlmm 50 0>;
+		qcom,gpio-reset = <1>;
+		qcom,gpio-vdig = <2>;
+		qcom,gpio-vio = <3>;
+		qcom,gpio-vana = <4>;
+		qcom,gpio-req-tbl-num = <0 1 2 3 4>;
+		qcom,gpio-req-tbl-flags = <1 0 0 0 0>;
+		qcom,gpio-req-tbl-label = "CAMIF_MCLK0",
+					"CAM_RESET0",
+					"CAM_VDIG",
+					"CAM_VIO",
+					"CAM_VANA";
+	};
+
+	qcom,camera@1 {
+		qcom,actuator-src = <&actuator1>;
+		qcom,led-flash-src = <&led_flash0>;
+		pinctrl-0 = <&cam_sensor_mclk3_active
+				 &cam_sensor_rear2_active>;
+		pinctrl-1 = <&cam_sensor_mclk3_suspend
+				 &cam_sensor_rear2_suspend>;
+		cam_vio-supply = <&cam_iovdd_gpio_regulator>;
+		/delete-property/ cam_vaf-supply;
+		qcom,cam-vreg-name = "cam_vio", "cam_vana", "cam_vdig";
+		qcom,cam-vreg-min-voltage = <0 0 0>;
+		qcom,cam-vreg-max-voltage = <0 0 0>;
+		qcom,cam-vreg-op-mode = <0 0 0>;
+		gpios = <&tlmm 35 0>,
+			<&tlmm 42 0>,
+			<&tlmm 52 0>,
+			<&tlmm 51 0>,
+			<&tlmm 63 0>,
+			<&tlmm 21 0>;
+		qcom,gpio-reset = <1>;
+		qcom,gpio-vdig = <2>;
+		qcom,gpio-vana = <3>;
+		qcom,gpio-vio = <4>;
+		qcom,gpio-vaf = <5>;
+		qcom,gpio-req-tbl-num = <0 1 2 3 4 5>;
+		qcom,gpio-req-tbl-flags = <1 0 0 0 0 0>;
+		qcom,gpio-req-tbl-label = "CAMIF_MCLK",
+					  "CAM_RESET",
+					  "CAM_VDIG",
+					  "CAM_VANA",
+					  "CAM_VIO",
+					  "CAM_VAF";
+		clocks = <&clock_mmss MCLK3_CLK_SRC>,
+			<&clock_mmss MMSS_CAMSS_MCLK3_CLK>;
+	};
+
+	qcom,camera@2 {
+		/delete-property/ qcom,actuator-src;
+		cam_vio-supply = <&cam_iovdd_gpio_regulator>;
+		qcom,cam-vreg-name = "cam_vio", "cam_vana", "cam_vdig";
+		qcom,cam-vreg-min-voltage = <0 0 0>;
+		qcom,cam-vreg-max-voltage = <0 0 0>;
+		qcom,cam-vreg-op-mode = <0 0 0>;
+		gpios = <&tlmm 33 0>,
+			<&tlmm 47 0>,
+			<&tlmm 52 0>,
+			<&tlmm 51 0>,
+			<&tlmm 63 0>;
+		qcom,gpio-reset = <1>;
+		qcom,gpio-vdig = <2>;
+		qcom,gpio-vana = <3>;
+		qcom,gpio-vio = <4>;
+		qcom,gpio-req-tbl-num = <0 1 2 3 4>;
+		qcom,gpio-req-tbl-flags = <1 0 0 0 0>;
+		qcom,gpio-req-tbl-label = "CAMIF_MCLK1",
+					"CAM_RESET1",
+					"CAM_VDIG1",
+					"CAM_VANA1",
+					"CAM_VIO1";
+		qcom,cci-master = <0>;
+
+	};
+	/delete-node/ qcom,camera@3;
+};
+
+&pm660l_3 {
+	flash_led: qcom,leds@d300 {
+		pm660l_torch0: qcom,torch_0 {
+			qcom,current-ma = <25>;
+		};
+		pm660l_switch0: qcom,led_switch_0 {
+			qcom,led-mask = <1>;
+		};
+	};
+};
+
+&led_flash0 {
+	qcom,flash-source = <&pm660l_flash0>;
+	qcom,torch-source = <&pm660l_torch0>;
+	qcom,led-name = "led_flash0";
+};
+&eeprom0 {
+	cell-index = <0>;
+	reg = <0>;
+	compatible = "qcom,eeprom";
+	cam_vio-supply = <&cam_iovdd_gpio_regulator>;
+	cam_vaf-supply = <&pm660l_l3>;
+	qcom,cam-vreg-name = "cam_vio", "cam_vana", "cam_vdig",
+				"cam_vaf";
+	qcom,cam-vreg-min-voltage = <0 0 0 2800000>;
+	qcom,cam-vreg-max-voltage = <0 0 0 2800000>;
+	qcom,cam-vreg-op-mode = <0 0 0 100000>;
+	qcom,gpio-no-mux = <0>;
+	qcom,mount-angle = <90>;
+	gpios = <&tlmm 32 0>,
+		<&tlmm 46 0>,
+		<&tlmm 40 0>,
+		<&tlmm 63 0>,
+		<&tlmm 50 0>;
+	qcom,gpio-reset = <1>;
+	qcom,gpio-vdig = <2>;
+	qcom,gpio-vio = <3>;
+	qcom,gpio-vana = <4>;
+	qcom,gpio-req-tbl-num = <0 1 2 3 4>;
+	qcom,gpio-req-tbl-flags = <1 0 0 0 0>;
+	qcom,gpio-req-tbl-label = "CAMIF_MCLK0",
+				"CAM_RESET0",
+				"CAM_VDIG",
+				"CAM_VIO",
+				"CAM_VANA";
+};
+
+&eeprom1 {
+	pinctrl-0 = <&cam_sensor_mclk3_active
+		 	&cam_sensor_rear2_active>;
+	pinctrl-1 = <&cam_sensor_mclk3_suspend
+		 	&cam_sensor_rear2_suspend>;
+	cam_vio-supply = <&cam_iovdd_gpio_regulator>;
+	/delete-property/ cam_vaf-supply;
+	qcom,cam-vreg-name = "cam_vio", "cam_vana", "cam_vdig";
+	qcom,cam-vreg-min-voltage = <0 0 0>;
+	qcom,cam-vreg-max-voltage = <0 0 0>;
+	qcom,cam-vreg-op-mode = <0 0 0>;
+	gpios = <&tlmm 35 0>,
+		<&tlmm 42 0>,
+		<&tlmm 52 0>,
+		<&tlmm 51 0>,
+		<&tlmm 63 0>,
+		<&tlmm 21 0>;
+	qcom,gpio-reset = <1>;
+	qcom,gpio-vdig = <2>;
+	qcom,gpio-vana = <3>;
+	qcom,gpio-vio = <4>;
+	qcom,gpio-vaf = <5>;
+	qcom,gpio-req-tbl-num = <0 1 2 3 4 5>;
+	qcom,gpio-req-tbl-flags = <1 0 0 0 0 0>;
+	qcom,gpio-req-tbl-label = "CAMIF_MCLK",
+			  	"CAM_RESET",
+			  	"CAM_VDIG",
+			  	"CAM_VANA",
+			  	"CAM_VIO",
+			  	"CAM_VAF";
+	clocks = <&clock_mmss MCLK3_CLK_SRC>,
+	<&clock_mmss MMSS_CAMSS_MCLK3_CLK>;
+};
+
+&eeprom2 {
+	cam_vio-supply = <&cam_iovdd_gpio_regulator>;
+	/delete-property/ cam_vaf-supply;
+	qcom,cam-vreg-name = "cam_vio", "cam_vana", "cam_vdig";
+	qcom,cam-vreg-min-voltage = <0 0 0>;
+	qcom,cam-vreg-max-voltage = <0 0 0>;
+	qcom,cam-vreg-op-mode = <0 0 0>;
+	gpios = <&tlmm 33 0>,
+		<&tlmm 47 0>,
+		<&tlmm 52 0>,
+		<&tlmm 51 0>,
+		<&tlmm 63 0>;
+	qcom,gpio-reset = <1>;
+	qcom,gpio-vdig = <2>;
+	qcom,gpio-vana = <3>;
+	qcom,gpio-vio = <4>;
+	qcom,gpio-req-tbl-num = <0 1 2 3 4>;
+	qcom,gpio-req-tbl-flags = <1 0 0 0 0>;
+	qcom,gpio-req-tbl-label = "CAMIF_MCLK1",
+				"CAM_RESET1",
+				"CAM_VDIG1",
+				"CAM_VANA1",
+				"CAM_VIO1";
+	qcom,cci-master = <0>;
+};
+	
+&actuator0 {
+	cam_vaf-supply = <&pm660l_l3>;
+	qcom,cam-vreg-max-voltage = <2800000>;
+};
+	
+&actuator1 {
+	/delete-property/ cam_vaf-supply;
+	/delete-property/ qcom,cam-vreg-name;
+	/delete-property/ qcom,cam-vreg-min-voltage;
+	/delete-property/ qcom,cam-vreg-max-voltage;
+	/delete-property/ qcom,cam-vreg-op-mode;
+};
+
