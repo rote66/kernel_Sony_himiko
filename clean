@@ -1,0 +1,7 @@
+#!/bin/sh
+rm -rf out
+rm repack_zip/emp/zImage
+rm -r magisk_module/system
+rm SOV42_EMP_Kernel_modules_magisk.zip
+rm SOV42_EMP_Kernel_Beta.zip
+echo "done"
