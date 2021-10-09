@@ -24,6 +24,8 @@ set_progress(0.500000);
 ui_print(" * Flashing newboot.img");
 run_program("/tmp/emp/busybox", "dd", "if=/tmp/emp/newboot.img", "of=/dev/block/bootdevice/by-name/boot");
 set_progress(0.600000);
+ui_print(" * Cleaning Old DTBO");
+run_program("/tmp/emp/busybox", "dd", "if=/dev/zero", "of=/dev/block/bootdevice/by-name/dtbo", "bs=1024", "count=8192");
 set_progress(0.700000);
 set_progress(0.800000);
 ui_print("--------------------------------------------------");
