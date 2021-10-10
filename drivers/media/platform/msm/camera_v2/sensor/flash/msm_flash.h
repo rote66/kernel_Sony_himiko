@@ -10,6 +10,11 @@
  * GNU General Public License for more details.
  *
  */
+/*
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are Copyright (c) 2018 Sony Mobile Communications Inc,
+ * and licensed under the license of the file.
+ */
 #ifndef MSM_FLASH_H
 #define MSM_FLASH_H
 
@@ -82,6 +87,7 @@ struct msm_flash_ctrl_t {
 	uint32_t flash_op_current[MAX_LED_TRIGGERS];
 	uint32_t flash_max_current[MAX_LED_TRIGGERS];
 	uint32_t flash_max_duration[MAX_LED_TRIGGERS];
+	struct led_classdev flash_cdev;
 
 	/* Torch */
 	uint32_t torch_num_sources;
@@ -89,6 +95,7 @@ struct msm_flash_ctrl_t {
 	struct led_trigger *torch_trigger[MAX_LED_TRIGGERS];
 	uint32_t torch_op_current[MAX_LED_TRIGGERS];
 	uint32_t torch_max_current[MAX_LED_TRIGGERS];
+	struct led_classdev torch_cdev;
 
 	void *data;
 	enum msm_camera_device_type_t flash_device_type;

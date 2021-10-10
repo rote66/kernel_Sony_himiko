@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2019, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2012-2018, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -1066,8 +1066,9 @@ static int __ipa_add_rt_rule(enum ipa_ip_type ip, const char *name,
 	 * tables
 	 */
 	if (!strncmp(tbl->name, IPA_DFLT_RT_TBL_NAME, IPA_RESOURCE_NAME_MAX) &&
-	    (tbl->rule_cnt > 0)) {
-		IPAERR("cannot add rules to default rt table\n");
+	    (tbl->rule_cnt > 0) && (at_rear != 0)) {
+		IPAERR("cannot add rule at end of tbl rule_cnt=%d at_rear=%d\n",
+		       tbl->rule_cnt, at_rear);
 		goto error;
 	}
 

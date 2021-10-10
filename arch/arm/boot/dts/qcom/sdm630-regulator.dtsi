@@ -9,6 +9,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+/*
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are Copyright (c) 2018 Sony Mobile Communications Inc,
+ * and licensed under the license of the file.
+ */
 
 #include <dt-bindings/clock/qcom,gcc-sdm660.h>
 #include <dt-bindings/clock/qcom,gpu-sdm660.h>
@@ -365,8 +370,14 @@
 	rpm-regulator-ldob6 {
 		status = "okay";
 		pm660l_l6: regulator-l6 {
+			qcom,regulator-type = <0>;  /* LDO */
+			qcom,init-enable = <0>;
+			qcom,init-ldo-mode = <1>;
+			qcom,init-pin-ctrl-enable = <0>;
+			qcom,init-pin-ctrl-mode = <0>;
 			regulator-min-microvolt = <1700000>;
 			regulator-max-microvolt = <3300000>;
+			qcom,init-voltage = <3300000>;
 			status = "okay";
 		};
 	};

@@ -9,6 +9,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+/*
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are Copyright (c) 2018 Sony Mobile Communications Inc,
+ * and licensed under the license of the file.
+ */
 
 #include <linux/module.h>
 #include <linux/ratelimit.h>
@@ -103,7 +108,9 @@ static void msm_vfe48_axi_enable_wm(void __iomem *vfe_base,
 		val = (0x2 << (2 * wm_idx));
 	else
 		val = (0x1 << (2 * wm_idx));
-
+	trace_printk("%s:%d  wm_idx %d enable %d\n",
+		__func__, __LINE__,
+		wm_idx,	enable);
 	msm_camera_io_w_mb(val, vfe_base + 0xCEC);
 }
 

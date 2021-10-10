@@ -9,6 +9,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+/*
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are Copyright (c) 2018 Sony Mobile Communications Inc,
+ * and licensed under the license of the file.
+ */
 
 #include <dt-bindings/interrupt-controller/irq.h>
 #include <dt-bindings/spmi/spmi.h>
@@ -172,17 +177,6 @@
 			qcom,supported-sizes = <6>, <9>;
 			qcom,ramp-index = <2>;
 			#pwm-cells = <2>;
-			qcom,period = <6000000>;
-
-			qcom,lpg {
-				label = "lpg";
-				cell-index = <0>;
-				qcom,duty-percents =
-					<0x01 0x0a 0x14 0x1e 0x28 0x32 0x3c
-					0x46 0x50 0x5a 0x64
-					0x64 0x5a 0x50 0x46 0x3c 0x32 0x28 0x1e
-					0x14 0x0a 0x01>;
-			};
 		};
 
 		pm660l_pwm_4: pwm@b400 {
@@ -213,12 +207,8 @@
 				qcom,max-current = <12>;
 				qcom,default-state = "off";
 				linux,name = "red";
-				qcom,start-idx = <0>;
-				qcom,idx-len = <22>;
-				qcom,duty-pcts =
-					[01 0a 14 1e 28 32 3c 46 50 5a 64
-					64 5a 50 46 3c 32 28 1e 14 0a 01];
-				qcom,use-blink;
+				linux,default-trigger =
+					"battery-charging";
 			};
 
 			green_led: qcom,rgb_1 {
@@ -230,6 +220,7 @@
 				qcom,max-current = <12>;
 				qcom,default-state = "off";
 				linux,name = "green";
+				linux,default-trigger = "battery-full";
 			};
 
 			blue_led: qcom,rgb_2 {
@@ -241,6 +232,7 @@
 				qcom,max-current = <12>;
 				qcom,default-state = "off";
 				linux,name = "blue";
+				linux,default-trigger = "boot-indication";
 			};
 		};
 

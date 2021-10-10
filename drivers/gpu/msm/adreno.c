@@ -1,4 +1,4 @@
-/* Copyright (c) 2002,2007-2019, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2002,2007-2020, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -9,6 +9,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
+ */
+/*
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are Copyright (c) 2018 Sony Mobile Communications Inc,
+ * and licensed under the license of the file.
  */
 #include <linux/module.h>
 #include <linux/uaccess.h>
@@ -2441,7 +2446,7 @@ static void adreno_regwrite(struct kgsl_device *device,
 	/*ensure previous writes post before this one,
 	 * i.e. act like normal writel() */
 	wmb();
-	__raw_writel(value, reg);
+	__raw_writel_no_log(value, reg);
 }
 
 /**
@@ -2825,6 +2830,19 @@ static void adreno_suspend_device(struct kgsl_device *device,
 static void adreno_resume_device(struct kgsl_device *device)
 {
 	adreno_dispatcher_unhalt(device);
+}
+
+u32 adreno_get_ucode_version(const u32 *data)
+{
+	u32 version;
+
+	version = data[1];
+
+	if ((version & 0xf) != 0xa)
+		return version;
+
+	version &= ~0xfff;
+	return  version | ((data[3] & 0xfff000) >> 12);
 }
 
 static const struct kgsl_functable adreno_functable = {

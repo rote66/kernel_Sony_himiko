@@ -9,6 +9,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+/*
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are Copyright (c) 2018 Sony Mobile Communications Inc,
+ * and licensed under the license of the file.
+ */
 
 #ifndef __MSM_VFE_H__
 #define __MSM_VFE_H__
@@ -493,6 +498,11 @@ enum msm_vfe_camif_state {
 
 struct msm_vfe_src_info {
 	uint32_t frame_id;
+#if defined(CONFIG_MACH_SONY_MERMAID) \
+       || defined(CONFIG_MACH_SONY_MERMAID_DSDS) \
+       || defined(CONFIG_MACH_SONY_HIMIKO)
+	uint32_t request_frame_id;
+#endif
 	uint32_t reg_update_frame_id;
 	uint8_t active;
 	uint8_t stream_count;

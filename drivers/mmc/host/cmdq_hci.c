@@ -9,6 +9,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+/*
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are Copyright (c) 2018 Sony Mobile Communications Inc,
+ * and licensed under the license of the file.
+ */
 
 #include <linux/delay.h>
 #include <linux/highmem.h>
@@ -448,7 +453,10 @@ static int cmdq_enable(struct mmc_host *mmc)
 	cmdq_writel(cq_host, mmc->card->rca, CQSSC2);
 
 	/* send QSR at lesser intervals than the default */
-	cmdq_writel(cq_host, SEND_QSR_INTERVAL, CQSSC1);
+	if ((mmc->card->cid.oemid == 0x14E) && (mmc->card->cid.manfid == 0x13)) {
+		cmdq_writel(cq_host, 0x70028, CQSSC1);
+	} else
+		cmdq_writel(cq_host, SEND_QSR_INTERVAL, CQSSC1);
 
 	/* enable bkops exception indication */
 	if (mmc_card_configured_manual_bkops(mmc->card) &&

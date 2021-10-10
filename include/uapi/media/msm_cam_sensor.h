@@ -1,3 +1,8 @@
+/*
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are Copyright (c) 2018 Sony Mobile Communications Inc,
+ * and licensed under the license of the file.
+ */
 #ifndef __UAPI_LINUX_MSM_CAM_SENSOR_H
 #define __UAPI_LINUX_MSM_CAM_SENSOR_H
 
@@ -357,6 +362,7 @@ enum msm_sensor_cfg_type_t {
 	CFG_WRITE_I2C_ARRAY_ASYNC,
 	CFG_WRITE_I2C_ARRAY_SYNC,
 	CFG_WRITE_I2C_ARRAY_SYNC_BLOCK,
+    CFG_SONY_CAMERA_SET_THERMAL,
 };
 
 enum msm_actuator_cfg_type_t {

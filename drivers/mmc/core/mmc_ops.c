@@ -8,6 +8,11 @@
  * the Free Software Foundation; either version 2 of the License, or (at
  * your option) any later version.
  */
+/*
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are Copyright (c) 2018 Sony Mobile Communications Inc,
+ * and licensed under the license of the file.
+ */
 
 #include <linux/slab.h>
 #include <linux/export.h>
@@ -361,6 +366,13 @@ err:
 	kfree(csd_tmp);
 	return ret;
 }
+
+int mmc_send_ext_csd(struct mmc_card *card, u8 *ext_csd)
+{
+	return mmc_send_cxd_data(card, card->host, MMC_SEND_EXT_CSD,
+			ext_csd, 512);
+}
+EXPORT_SYMBOL_GPL(mmc_send_ext_csd);
 
 int mmc_send_cid(struct mmc_host *host, u32 *cid)
 {

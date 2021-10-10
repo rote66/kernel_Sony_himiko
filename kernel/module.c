@@ -16,6 +16,11 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+/*
+ * NOTE: This file has been modified by Sony Mobile Communications Inc.
+ * Modifications are Copyright (c) 2018 Sony Mobile Communications Inc,
+ * and licensed under the license of the file.
+ */
 #include <linux/export.h>
 #include <linux/moduleloader.h>
 #include <linux/trace_events.h>
@@ -1318,8 +1323,9 @@ static int check_version(Elf_Shdr *sechdrs,
 		goto bad_version;
 	}
 
-	pr_warn("%s: no symbol version for %s\n", mod->name, symname);
-	return 0;
+	/* Broken toolchain. Warn once, then let it go.. */
+	pr_warn_once("%s: no symbol version for %s\n", mod->name, symname);
+	return 1;
 
 bad_version:
 	pr_warn("%s: disagrees about version of symbol %s\n",
