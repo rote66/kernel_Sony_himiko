@@ -342,6 +342,7 @@ int kgsl_allocate_user(struct kgsl_device *device,
 	int ret;
 
 	memdesc->flags = flags;
+	spin_lock_init(&memdesc->lock);
 
         spin_lock_init(&memdesc->lock);
 	if (kgsl_mmu_get_mmutype(device) == KGSL_MMU_TYPE_NONE)
@@ -373,7 +374,6 @@ static int kgsl_page_alloc_vmfault(struct kgsl_memdesc *memdesc,
 
 		get_page(page);
 		vmf->page = page;
-
 
 		return 0;
 	}
@@ -503,7 +503,6 @@ static int kgsl_contiguous_vmfault(struct kgsl_memdesc *memdesc,
 		return VM_FAULT_OOM;
 	else if (ret == -EFAULT)
 		return VM_FAULT_SIGBUS;
-
 
 	return VM_FAULT_NOPAGE;
 }

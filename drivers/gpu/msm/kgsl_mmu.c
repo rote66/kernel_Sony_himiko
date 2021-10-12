@@ -451,7 +451,6 @@ void kgsl_mmu_put_gpuaddr(struct kgsl_memdesc *memdesc)
 	 * gpuaddr returns to zero so we shouldn't need to worry about taking a
 	 * lock here
 	 */
-
 	if (!kgsl_memdesc_is_global(memdesc))
 		memdesc->gpuaddr = 0;
 

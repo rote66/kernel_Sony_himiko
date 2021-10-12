@@ -283,6 +283,7 @@ static inline int kgsl_allocate_global(struct kgsl_device *device,
 
 	memdesc->flags = flags;
 	memdesc->priv = priv;
+	spin_lock_init(&memdesc->lock);
 
         spin_lock_init(&memdesc->lock);
 	if (((memdesc->priv & KGSL_MEMDESC_CONTIG) != 0) ||
