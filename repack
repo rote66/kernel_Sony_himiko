@@ -25,7 +25,7 @@ cd ..
 repack_zip/emp/strip --strip-unneeded magisk_module/system/vendor/lib/modules/*
 mv magisk_module/system/vendor/lib/modules/wlan.ko magisk_module/system/vendor/lib/modules/qca_cld3_wlan.ko
 ###fake modules
-#touch magisk_module/system/vendor/lib/modules/texfat.ko
+touch magisk_module/system/vendor/lib/modules/texfat.ko
 touch magisk_module/system/vendor/lib/modules/bu520x1nvx.ko
 touch magisk_module/system/vendor/lib/modules/fpc1145_platform.ko
 touch magisk_module/system/vendor/lib/modules/ldo_vibrator.ko
