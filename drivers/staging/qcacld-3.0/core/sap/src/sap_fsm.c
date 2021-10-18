@@ -3589,7 +3589,7 @@ static int sap_stop_dfs_cac_timer(struct sap_context *sapContext)
 static int sap_start_dfs_cac_timer(struct sap_context *sap_ctx)
 {
 	QDF_STATUS status;
-	uint32_t cac_dur;
+	uint32_t cac_dur = 0;
 	tHalHandle hal = NULL;
 	tpAniSirGlobal mac = NULL;
 	enum dfs_reg dfs_region;
