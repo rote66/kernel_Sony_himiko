@@ -63,8 +63,7 @@
 #include <linux/wireless.h>
 #include <net/cfg80211.h>
 #include <linux/inetdevice.h>
-#include <net/addrconf.h>	if (!sk)
-		return;
+#include <net/addrconf.h>
 #include "wlan_hdd_cfg80211.h"
 #include "wlan_hdd_ext_scan.h"
 #include "wlan_hdd_p2p.h"
