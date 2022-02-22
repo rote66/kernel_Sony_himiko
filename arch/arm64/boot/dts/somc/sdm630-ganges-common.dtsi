@@ -17,6 +17,7 @@
 
 #include "charger-ganges-common.dtsi"
 #include <dt-bindings/gpio/gpio.h>
+#include "../qcom/msm-rdbg-disable.dtsi"
 
 &soc {
 	somc_pinctrl: somc_pinctrl {
