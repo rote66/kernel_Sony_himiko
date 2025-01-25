@@ -2523,7 +2523,7 @@ void adreno_dispatcher_schedule(struct kgsl_device *device)
 	struct adreno_device *adreno_dev = ADRENO_DEVICE(device);
 	struct adreno_dispatcher *dispatcher = &adreno_dev->dispatcher;
 
-	queue_kthread_work(&kgsl_driver.worker, &dispatcher->work);
+	kthread_queue_work(&kgsl_driver.worker, &dispatcher->work);
 }
 
 /**
@@ -2819,7 +2819,7 @@ int adreno_dispatcher_init(struct adreno_device *adreno_dev)
 	setup_timer(&dispatcher->fault_timer, adreno_dispatcher_fault_timer,
 		(unsigned long) adreno_dev);
 
-	init_kthread_work(&dispatcher->work, adreno_dispatcher_work);
+	kthread_init_work(&dispatcher->work, adreno_dispatcher_work);
 
 	init_completion(&dispatcher->idle_gate);
 	complete_all(&dispatcher->idle_gate);
@@ -2878,7 +2878,7 @@ int adreno_dispatcher_idle(struct adreno_device *adreno_dev)
 	 * or pending dispatcher works on worker are
 	 * finished
 	 */
-	flush_kthread_worker(&kgsl_driver.worker);
+	kthread_flush_worker(&kgsl_driver.worker);
 
 	ret = wait_for_completion_timeout(&dispatcher->idle_gate,
 			msecs_to_jiffies(ADRENO_IDLE_TIMEOUT));
