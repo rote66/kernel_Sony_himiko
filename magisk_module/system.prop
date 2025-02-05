@@ -1,0 +1,5 @@
+#lmk
+ro.lmk.debug=true
+ro.lmk.use_psi=true
+ro.config.low_ram=true
+ro.lmk.kill_timeout_ms=100
